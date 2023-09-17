@@ -25,8 +25,7 @@ Tu znajdują się statystki dotyczące filmów, które graliśmy.
 <div class="movies-container">
     {% for movie, rate in page_obj %}
         <div class="single-movie">
-            <a href="#" style="text-decoration: none; color: inherit;">
-
+            <a href="{% url 'movie:movie_details' movie.id %}" style="text-decoration: none; color: inherit;">
             <div class="description">
                 <div>
                     <img class="movie-thumbnail" src={{movie.thumbnail.url}}>

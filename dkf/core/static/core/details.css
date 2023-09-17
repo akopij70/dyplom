@@ -1,0 +1,71 @@
+.details-profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 2em;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2em;
+}
+
+.movie-details {
+    margin-top: 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3em;
+}
+
+.movie-details-part {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:start;
+}
+
+.movie-details-thumbnail {
+    width: 100%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}
+
+.description, .opinions {
+    text-align: justify;
+    text-justify: distribute;
+}
+
+.opinions {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
+
+.opinion-box {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.1em;
+}
+
+.opinion-text {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    border-radius: 1em;
+    padding: 1em;
+}
+
+@media only screen and (min-width: 730px) {
+    .details {
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 729px) {
+    .details-profile {
+        font-size: 12px;
+    }
+
+    .details {
+        width: 100%;
+    }
+}

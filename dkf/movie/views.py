@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.db.models import Avg
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Movie, Vote
 
 
@@ -29,4 +29,11 @@ def get_all_movies(request):
         'votes': votes,
         'page_obj': page_obj,
 
+    })
+
+def movie_details(request, pk):
+    movie = get_object_or_404(Movie, pk=pk)
+    return render(request, 'movie/movie_details.html', {
+        'movie': movie,
+        'title': 'Szczegóły filmu',
     })
