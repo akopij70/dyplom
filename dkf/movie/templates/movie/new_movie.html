@@ -1,0 +1,30 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'core/forms.css' %}">
+
+    <div class="form-profile">
+        <div class="form-signature" > {{ caption }} </div>
+        <form method="post" action="." enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            <div class="nested-form">
+                {{ movie_form.as_p }}
+            </div>
+            {% if movie_form.errors or movie_form.non_field_errors %}
+                <div>
+                    {% for field in movie_form %}
+                        {{ field.errors }}
+                    {% endfor %}
+                    {{ movie_form.non_field_errors }}
+                </div>
+            {% endif %}
+            <div style="text-align: center;">
+                <button type="submit" class="save-button"> Zapisz </button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

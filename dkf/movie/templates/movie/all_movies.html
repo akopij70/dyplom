@@ -14,7 +14,7 @@ Tu znajdują się statystki dotyczące filmów, które graliśmy.
     {% if request.user.is_staff %}
     Dzień dobry szefie
     <p>
-        <a href="#"> <button class="add-button"> Dodaj film do bazy filmów</button> </a>
+        <a href="{% url 'movie:new_movie' %}"> <button class="add-button"> Dodaj film do bazy filmów</button> </a>
     </p>
     {% endif %}
 </div>
@@ -39,8 +39,8 @@ Tu znajdują się statystki dotyczące filmów, które graliśmy.
 
             {% if request.user.is_staff %}
             <div class="edit">
-                <a href="#"> <button class="edit-button"> Edytuj </button> </a>
-                <a href="#"> <button class="delete-button"> Usuń </button> </a>
+                <a href="{% url 'movie:edit_movie' movie.id %}"> <button class="edit-button"> Edytuj </button> </a>
+                <a href="{% url 'movie:delete_movie' movie.id %}"> <button class="delete-button"> Usuń </button> </a>
             </div>
             {% endif %}
         </div>

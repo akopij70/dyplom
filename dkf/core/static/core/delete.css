@@ -1,0 +1,55 @@
+.confirmation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.confirm-button, .cancel-button {
+    background-color: white;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s,
+                background-color 0.3s;
+
+}
+
+.confirm-button {
+    width: fit-content;
+    border-color: rgb(173, 5, 5);
+    color: rgb(173, 5, 5);
+}
+
+.cancel-button {
+    width: fit-content;
+    border-color: rgb(5, 173, 170);
+    color: rgb(5, 173, 170);
+}
+
+.confirm-button:hover, .cancel-button:hover{
+    color: white;
+}
+
+.confirm-button:hover {
+    background-color: rgb(173, 5, 5);
+}
+
+.cancel-button:hover {
+    background-color: rgb(5, 173, 170);;
+}
+
+@media only screen and (min-width: 730px) {
+    .confirmation, .confirm-button, .cancel-button {
+        font-size: 28px;
+    }
+}
+
+@media only screen and (max-width: 729px) {
+    .confirmation, .confirm-button, .cancel-button {
+        font-size: 17px;
+    }
+}

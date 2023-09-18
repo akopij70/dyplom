@@ -1,0 +1,118 @@
+.form-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-signature {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.nested-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.nested-form p {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input {
+    flex: 1;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(200, 200, 200);
+    padding: 15px 18px 15px 18px;
+    transition: border-color 0.3s;
+}
+
+.form-input:hover {
+    border-color: black;
+}
+
+.form-input:focus {
+    outline-style: solid;
+    outline-color: black;
+    border-color: black;
+}
+
+input[type=file] {
+    width: 100%;
+    color: rgb(100, 100, 100);
+    padding: 5px;
+    background: white;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(200, 200, 200);
+  }
+
+input[type=file]::file-selector-button {
+    margin-right: 20px;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: solid rgb(200, 200, 200);
+    color: black;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+
+  input[type=file]::file-selector-button:hover {
+    border-color: black;
+}
+
+.save-button {
+    width: 50%;
+    font-size: 16px;
+    background-color: white;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    border-color: rgb(5, 173, 5);
+    color: rgb(5, 173, 5);
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s,
+                background-color 0.3s;
+}
+
+.save-button:hover {
+    background-color: rgb(5, 173, 5);
+    color: white;
+}
+
+@media only screen and (min-width: 730px) {
+    .form-signature {
+        font-size: 25px;
+    }
+
+    .form {
+        width: 25%;
+    }
+}
+
+@media only screen and (max-width: 729px) {
+    .form-signature {
+        font-size: 20px;
+    }
+
+    .form  {
+        width: 100%;
+    }
+
+    input[type=file] {
+        font-size: 10px;
+    }
+}
