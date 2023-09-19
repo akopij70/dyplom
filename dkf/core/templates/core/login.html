@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Strona logowania {% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/forms.css' %}">
+
+    <div class="form-profile">
+        <div class="form-signature"> Autoryzacja </div>
+        <form method="post" action="." class="form">
+            {% csrf_token %}
+            <div class="nested-form">
+                {{ form.as_p }}
+                {% if form.errors or form.non_field_errors %}
+                <div>
+                    {% for field in form %}
+                        {{ field.errors }}
+                    {% endfor %}
+
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            </div>
+            <div style="text-align: center;">
+                <button type="submit" class="save-button">Zaloguj się</button>
+            </div>
+        </form>
+        <div>
+            Nie masz konta?
+            <a href={% url 'core:signup' %}> <button class="signup-button"> Utwórz je </button> </a>
+        </div>
+    </div>
+{% endblock %}

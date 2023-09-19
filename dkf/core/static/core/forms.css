@@ -73,24 +73,47 @@ input[type=file]::file-selector-button {
     border-color: black;
 }
 
-.save-button {
-    width: 50%;
-    font-size: 16px;
+.save-button, .signup-button {
+    margin: 2em;
+    width: fit-content;
+    padding: 0.5em;
+    font-size: 18px;
+    font-weight: bold;
     background-color: white;
     border-style: solid;
     border-width: 3px;
     border-radius: 10px;
-    border-color: rgb(5, 173, 5);
-    color: rgb(5, 173, 5);
-    font-weight: bold;
     cursor: pointer;
-    transition: color 0.3s,
-                background-color 0.3s;
+    transition: 0.3s;
+}
+
+.save-button {
+    color: rgb(5, 173, 5);;
+    border-color: rgb(5, 173, 5);
+}
+
+.signup-button {
+    border-color: black;
+
+}
+
+.save-button:hover, .signup-button:hover{
+    color: white;
 }
 
 .save-button:hover {
     background-color: rgb(5, 173, 5);
-    color: white;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+
+.signup-button:hover{
+    background-color: black;
+}
+
+.save-button:active {
+    padding: 1em 3em 1em 3em;
 }
 
 @media only screen and (min-width: 730px) {

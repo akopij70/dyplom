@@ -29,6 +29,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.1.10', '192.168.1.42', '192.168.1.40', '127.0.0.1', '192.168.0.132', '192.168.1.35']
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+
 # Application definition
 
 INSTALLED_APPS = [
