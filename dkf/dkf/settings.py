@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'movie',
+    'event',
     'django_cleanup.apps.CleanupConfig',
 ]
 

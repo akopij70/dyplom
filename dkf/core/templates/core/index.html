@@ -1,5 +1,26 @@
 {% extends 'core/base.html' %}
+
+
 {% block title %} {{ title }} {% endblock %}
+{% block nav_index_active %}active{% endblock %}
+
 {% block content %}
-	Test
+    {% load static %}
+
+    <div>
+        {% for event in current_events %}
+            {% if event.movies.all %}
+                {% for movie in event.movies.all %}
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    {% include 'core/current_event.html' %}
+                </a>
+                {% endfor %}
+            {% else %}
+                <a href="#" style="text-decoration: none; color: inherit;">
+                    {% include 'core/current_event.html' %}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+
 {% endblock %}

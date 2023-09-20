@@ -1,0 +1,40 @@
+{% load static %}
+    <link rel="stylesheet" href="{% static 'event/all_events.css' %}">
+    <link rel="stylesheet" href="{% static 'core/edit.css' %}">
+
+<div class="event-profile" >
+    <div class="image-placeholder">
+        {% if movie %}
+        	<img class="current-movie-image" src={{movie.thumbnail.url}}>
+        {% else %}
+            <img class="current-movie-image" src={% static 'core/images/logo.png' %}>
+        {% endif %}
+    </div>
+
+    <div class="specific-event-info">
+        <div class="event-actions">
+            {% if request.user.is_staff %}
+            <div class="edit">
+                <a href="#"> <button class="edit-button"> Edytuj </button> </a>
+                <a href="#"> <button class="details-button"> Szczegóły wydarzenia </button> </a>
+                <a href="#"> <button class="delete-button"> Usuń </button> </a>
+            </div>
+            {% else %}
+                <a href="#"> <button class="details-button"> Szczegóły wydarzenia </button> </a>
+            {% endif %}
+        </div>
+        <div class="title">
+            {% if movie %}
+                {{movie}}
+            {% else %}
+                Wydarzenie bez filmu
+            {% endif %}
+        </div>
+        <div class="when">
+            {{event}}
+        </div>
+        <div class="where">
+            {{event.location}}
+        </div>
+    </div>
+</div>

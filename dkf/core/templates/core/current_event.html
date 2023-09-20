@@ -1,0 +1,30 @@
+{% load static %}
+        <link rel="stylesheet" href="{% static 'event/all_events.css' %}">
+
+<div class="event-profile" >
+    <div class="image-placeholder">
+        {% if movie %}
+        	<img class="current-movie-image" src={{movie.thumbnail.url}}>
+        {% else %}
+            <img class="current-movie-image" src={% static 'core/images/logo.png' %}>
+        {% endif %}
+    </div>
+    <div class="specific-event-info">
+        <div class="event-status">
+            {{event.get_date_status_display}}
+        </div>
+        <div class="title">
+            {% if movie %}
+                {{movie}}
+            {% else %}
+                Wydarzenie bez filmu
+            {% endif %}
+        </div>
+        <div class="when">
+            {{event}}
+        </div>
+        <div class="where">
+            {{event.location}}
+        </div>
+    </div>
+</div>

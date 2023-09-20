@@ -1,0 +1,66 @@
+.event-profile {
+    margin-bottom: 1em;
+    margin-top: 1em;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}
+
+.specific-event-info {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-placeholder {
+    display: grid;
+    align-items: center;
+}
+
+.event-status, .title {
+    font-weight: bold;
+}
+
+.title {
+    text-transform: uppercase;
+}
+
+.current-movie-image{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+}
+
+@media only screen and (min-width: 730px) {
+    div .specific-event-info {
+        font-size: 26px;
+    }
+
+    .when {
+        font-size: 18px;
+    }
+
+    .where {
+        font-size: 16px;
+    }
+    font-size: 22px;
+}
+
+@media only screen and (max-width: 729px) {
+
+    div .specific-event-info {
+        font-size: 12px;
+    }
+
+    .when {
+        font-size: 10px;
+    }
+
+    .where {
+        font-size: 8px;
+    }
+}

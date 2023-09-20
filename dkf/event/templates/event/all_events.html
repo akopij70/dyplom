@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block nav_all_events_active %}active{% endblock %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/edit.css' %}">
+
+    <div>
+    Dzień dobry szefie
+    {% if request.user.is_staff %}
+    <p>
+        <a href="{% url 'movie:new_movie' %}"> <button class="add-button"> Dodaj film do bazy filmów</button> </a>
+    </p>
+
+    <p>
+        <a href="#"> <button class="add-button"> Utwórz wydarzenie </button> </a>
+    </p>
+    {% endif %}
+    </div>
+
+    <div>
+        {% for event in page_obj %}
+            {% if event.movies.all %}
+                {% for movie in event.movies.all %}
+                    {% include 'event/event_with_edit.html' %}
+                {% endfor %}
+            {% else %}
+                {% include 'event/event_with_edit.html' %}
+            {% endif %}
+        {% endfor %}
+</div>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; pierwsza</a>
+            <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
+        {% endif %}
+
+        <span class="current">
+            Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">następna</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">ostatnia &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
