@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/details.css' %}">
+
+    <div class="details-profile">
+        <div class="details-caption">
+            Szczegóły wydarzenia
+        </div>
+        <div class="details">
+            <div>
+                Data: <br>{{event}}
+            </div>
+            <div>
+                Lokalizacja: <br> {{event.location}}
+            </div>
+            {% if event.description %}
+            <div class="description">
+                Opis wydarzenia: <br> {{event.description}}
+            </div>
+            {% endif %}
+            {% if event.movies.all %}
+            <div>
+                Filmy:
+                <div class="movies-grid">
+                    {% for movie in event.movies.all %}
+                    <div class="movie-details">
+                        <div class="movie-details-part">
+                            <img class="movie-details-thumbnail" src={{movie.thumbnail.url}}>
+                        </div>
+                        <div class="movie-details-part">
+                            <div> {{ movie }} <!-- Tytuł: <br> {{movie.title}} --></div>
+                            <div> Reżyser: <br> {{movie.director}} </div>
+                            <div> Data premiery: <br> {{movie.release_date}} </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

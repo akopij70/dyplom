@@ -16,11 +16,11 @@
             {% if request.user.is_staff %}
             <div class="edit">
                 <a href="#"> <button class="edit-button"> Edytuj </button> </a>
-                <a href="#"> <button class="details-button"> Szczegóły wydarzenia </button> </a>
+                <a href="{% url 'event:event_details' event.id %}"> <button class="details-button"> Szczegóły wydarzenia </button> </a>
                 <a href="#"> <button class="delete-button"> Usuń </button> </a>
             </div>
             {% else %}
-                <a href="#"> <button class="details-button"> Szczegóły wydarzenia </button> </a>
+                <a href="{% url 'event:event_details' event.id %}"> <button class="details-button"> Szczegóły wydarzenia </button> </a>
             {% endif %}
         </div>
         <div class="title">

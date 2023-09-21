@@ -6,10 +6,21 @@
     row-gap: 2em;
 }
 
+.details-caption {
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+}
+
 .details {
     display: flex;
     flex-direction: column;
     row-gap: 2em;
+}
+
+.movies-grid {
+    display: grid;
+    row-gap: 1em;
 }
 
 .movie-details {

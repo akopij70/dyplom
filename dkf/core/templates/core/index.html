@@ -11,12 +11,12 @@
         {% for event in current_events %}
             {% if event.movies.all %}
                 {% for movie in event.movies.all %}
-                <a href="#" style="text-decoration: none; color: inherit;">
+                <a href="{% url 'event:event_details' event.id %}" style="text-decoration: none; color: inherit;">
                     {% include 'core/current_event.html' %}
                 </a>
                 {% endfor %}
             {% else %}
-                <a href="#" style="text-decoration: none; color: inherit;">
+                <a href="{% url 'event:event_details' event.id %}" style="text-decoration: none; color: inherit;">
                     {% include 'core/current_event.html' %}
                 </a>
             {% endif %}

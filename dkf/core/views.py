@@ -15,7 +15,6 @@ def index(request):
             event.date_status = DateStatus.NOW
             sorted_events.append(event)
         elif event.event_in_past():
-            print("BYLO")
             event.date_status = DateStatus.PAST
             past_events.append(event)
         elif event.event_in_future():
