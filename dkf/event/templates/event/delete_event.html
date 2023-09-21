@@ -1,0 +1,27 @@
+{% extends 'event/event_details.html' %}
+
+{% block content %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'core/delete.css' %}">
+    <form method="post" action="{% url 'event:delete_event' event.id %}">
+        {% csrf_token %}
+        <div class="confirmation">
+            <div>
+                Czy na pewno chcesz usunąć to wydarzenie?
+            </div>
+            <div>
+                <button type="submit" class="confirm-button"> Usuń </button>
+                <button type="button" id="cancel" class="cancel-button"> Powrót </button>
+            </div>
+        </div>
+        </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var cancelButton = document.getElementById('cancel');
+                cancelButton.addEventListener('click', function () {
+                    window.history.back();
+                });
+            });
+            </script>
+    {{ block.super }}
+{% endblock content %}

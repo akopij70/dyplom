@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="{% static 'core/forms.css' %}">
 
     <div class="form-profile">
-        <div class="form-signature" >Edycja filmu z bazy </div>
+        <div class="form-signature" >Edycja wydarzenia </div>
         <form method="post" action="." enctype="multipart/form-data" class="form">
             {% csrf_token %}
             <div class="nested-form">
-                {{ movie_form.as_p }}
+                {{ event_form.as_p }}
             </div>
                 {% if form.errors or form.non_field_errors %}
                     <div>

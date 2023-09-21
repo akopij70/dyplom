@@ -1,6 +1,6 @@
 from django import forms
-from dkf.movie.models import Movie
-from models import Event
+from movie.models import Movie
+from .models import Event
 
 
 class EventForm(forms.ModelForm):
