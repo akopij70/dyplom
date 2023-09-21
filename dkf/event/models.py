@@ -36,14 +36,16 @@ class Event(models.Model):
         current_week = datetime.date.today().isocalendar().week
         event_year = self.date.year
         event_week = self.date.isocalendar().week
-        return current_week > event_week or current_year >= event_year
+        result = current_week > event_week and current_year == event_year
+        return current_year > event_year or result
 
     def event_in_future(self) -> bool:
         current_year = datetime.date.today().year
         current_week = datetime.date.today().isocalendar().week
         event_year = self.date.year
         event_week = self.date.isocalendar().week
-        return current_week < event_week or current_year <= event_year
+        result = current_week < event_week and current_year == event_year
+        return current_year <= event_year or result
 
     def __str__(self) -> str:
         return f'{self.date} {self.time}'
