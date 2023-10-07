@@ -28,8 +28,13 @@
 }
 
 .form-input {
+    margin-top: 0.5em;
+    /*margin-bottom: 1em;*/
     flex: 1;
     border-radius: 10px;
+    max-height: 8em;
+    resize: none;
+    overflow-y: auto;
     border-width: 2px;
     border-style: solid;
     border-color: rgb(200, 200, 200);

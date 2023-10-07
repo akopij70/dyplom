@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/forms.css' %}">
+
+    <div class="form-profile">
+        <div class="form-signature" > {{ caption }} </div>
+        <form method="post" action="." enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            <div class="nested-form">
+                {% for field in event_form %}
+                    <p>
+                        {{ field.label_tag }} {{ field }}
+                    </p>
+                    {% if field.name == 'existing_movies' %}
+                        <div style="text-align: center;">
+                            Brak filmu w bazie?
+                            <a href={% url 'movie:new_movie_from_event' %}>
+                                <button type="button" class="movie-outside-the-base-button"> Dodaj go </button>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            {% if event_form.errors or event_form.non_field_errors %}
+                <div>
+                    {% for field in event_form %}
+                        {{ field.errors }}
+                    {% endfor %}
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div style="text-align: center;">
+                <button type="submit" class="save-button"> Zapisz </button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -48,4 +48,6 @@ class Event(models.Model):
         return current_year <= event_year or result
 
     def __str__(self) -> str:
-        return f'{self.date} {self.time}'
+        formatted_date = self.date.strftime('%d.%m.%y')
+        formatted_time = self.time.strftime('%H:%M')
+        return f'{formatted_date} - {formatted_time}'

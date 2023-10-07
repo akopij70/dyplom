@@ -1,31 +1,37 @@
 from django import forms
 from movie.models import Movie
+
 from .models import Event
 
 
-class EventForm(forms.ModelForm):
-    existing_movies = forms.MultipleChoiceField(
-        label='Filmy, które mamy w bazie:',
-        choices=[(movie.id, movie.title) for movie in Movie.objects.all()],
-        required=False,
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'new_event_selector'}),
-    )
+def get_existing_movies():
+    return [(movie.id, movie.title) for movie in Movie.objects.all()]
 
+
+class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['date', 'time', 'location', 'description', 'existing_movies']
+        fields = ['existing_movies', 'date', 'time', 'location', 'description']
 
-    def __init__(self, *args, **kwargs):
-        super(EventForm, self).__init__(*args, **kwargs)
-        self.fields['existing_movies'].choices = self.get_existing_movies()
+    # date = forms.DateField(label='Data:', widget=forms.DateInput(attrs={
+    #     'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)',
+    #     'class': 'form-input'
+    # }))
 
-    def get_existing_movies(self):
-        return [(movie.id, movie.title) for movie in Movie.objects.all()]
+    existing_movies = forms.MultipleChoiceField(
+        label='Film(y) na wydarzeniu',
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-input'}),
+        required=False,
+        choices=get_existing_movies(),
+    )
 
-    date = forms.DateField(label='Data:', widget=forms.DateInput(attrs={
-        'type': 'date', 'placeholder': 'yyyy-mm-dd (DOB)',
-        'class': 'form-input'
-    }))
+    date = forms.DateField(
+        label='Data',
+        widget=forms.TextInput(attrs={'class': 'form-input', 'type': 'date'}),
+        # widget=forms.DateInput(format='%d.%m.%Y', attrs={'placeholder': 'dd.mm.yy', 'class': 'form-input', 'type': 'date'}),
+        # input_formats=['%dd.%mm.%yy']
+        input_formats=['%Y-%m-%d']
+    )
 
     time = forms.TimeField(label='Godzina:',
                            widget=forms.TimeInput(attrs={'placeholder': 'HH:MM', 'class': 'form-input'})
@@ -39,3 +45,6 @@ class EventForm(forms.ModelForm):
 
     description = forms.CharField(label='Opis wydarzenia:', required=False, widget=forms.Textarea(
         attrs={'class': 'form-input'}))
+
+    def __init__(self, *args, **kwargs):
+        super(EventForm, self).__init__(*args, **kwargs)

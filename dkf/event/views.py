@@ -44,7 +44,8 @@ def new_event(request):
     else:
         event_form = EventForm()
 
-    return render(request, 'event/new_event.html', {
+    return render(request, 'event/event_form.html', {
+        'caption': 'Tworzenie nowego wydarzenia',
         'event_form': event_form,
         'title': 'Nowe wydarzenia',
     })
@@ -52,18 +53,28 @@ def new_event(request):
 
 @staff_member_required
 def edit_event(request, pk):
+    print('hej')
     event = get_object_or_404(Event, pk=pk) if pk else None
     if request.method == 'POST':
+        print('jol')
         event_form = EventForm(request.POST, instance=event)
         if event_form.is_valid():
+            print('siema')
+            event = event_form.save(commit=False)
             existing_movies = event_form.cleaned_data['existing_movies']
             event.movies.set(existing_movies)
             event_form.save()
-            return redirect('/')
+            return redirect('event:all_events')
     else:
-        event_form = EventForm(instance=event)
+        print('cze')
+        print("Initial movies:", event.movies.all())
+        event_form = EventForm(instance=event, initial={'existing_movies': [
+                movie.id for movie in event.movies.all()
+        ]})
 
-    return render(request, 'event/new_event.html', {
+    print('juz')
+    return render(request, 'event/event_form.html', {
+        'caption': 'Edycja wydarzenia',
         'event_form': event_form,
         'event': event,
         'title': 'Edycja wydarzenia', })
