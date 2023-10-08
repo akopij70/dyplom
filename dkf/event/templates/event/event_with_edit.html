@@ -25,16 +25,18 @@
         </div>
         <div class="title">
             {% if movie %}
-                {{movie}}
+                {{ movie }}
+            {% elif event.title %}
+                {{ event.title }}
             {% else %}
                 Wydarzenie bez filmu
             {% endif %}
         </div>
         <div class="when">
-            {{event}}
+            {{ event }}
         </div>
         <div class="where">
-            {{event.location}}
+            {{ event.location }}
         </div>
     </div>
 </div>

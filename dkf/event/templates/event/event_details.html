@@ -9,17 +9,20 @@
     <div class="details-profile">
         <div class="details-caption">
             Szczegóły wydarzenia
+            {% if event.title %}
+                <br> {{ event.title }}
+            {% endif %}
         </div>
         <div class="details">
             <div>
-                Data: <br>{{event}}
+                Data: <br>{{ event }}
             </div>
             <div>
-                Lokalizacja: <br> {{event.location}}
+                Lokalizacja: <br> {{ event.location }}
             </div>
             {% if event.description %}
             <div class="description">
-                Opis wydarzenia: <br> {{event.description}}
+                Opis wydarzenia: <br> {{ event.description }}
             </div>
             {% endif %}
             {% if event.movies.all %}
@@ -33,8 +36,8 @@
                         </div>
                         <div class="movie-details-part">
                             <div> {{ movie }} <!-- Tytuł: <br> {{movie.title}} --></div>
-                            <div> Reżyser: <br> {{movie.director}} </div>
-                            <div> Data premiery: <br> {{movie.release_date}} </div>
+                            <div> Reżyser: <br> {{ movie.director }} </div>
+                            <div> Data premiery: <br> {{ movie.release_date }} </div>
                         </div>
                     </div>
                     {% endfor %}

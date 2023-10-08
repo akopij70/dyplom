@@ -11,14 +11,15 @@ class DateStatus(models.TextChoices):
 
 
 class Event(models.Model):
+    description = models.TextField(blank=True, null=True)
     date = models.DateField(default=timezone.now)
-    time = models.TimeField(blank=True, null=True)
-    location = models.CharField(max_length=255, default='inne - podaj / kino nowe horyzonty / budynek A1 PWR, sala 329')
     date_status = models.CharField(max_length=8,
                                    choices=DateStatus.choices,
                                    default=DateStatus.UNKNOWN, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    location = models.CharField(max_length=255, default='inne - podaj / kino nowe horyzonty / budynek A1 PWR, sala 329')
     movies = models.ManyToManyField('movie.Movie', blank=True, related_name='events')
+    time = models.TimeField(blank=True, null=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         ordering = ('-date',)
