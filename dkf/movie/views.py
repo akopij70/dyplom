@@ -1,9 +1,11 @@
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.views import login_required
 from django.core.paginator import Paginator
 from django.db.models import Avg
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import MovieForm
+from .forms import MovieForm, VoteForm
 from .models import Movie, Vote
 
 
@@ -16,8 +18,8 @@ def get_all_movies(request):
         rate = Vote.objects.filter(movie__title=movie.title).aggregate(Avg("rating"))['rating__avg']
         rated_movies.update({movie: rate})
 
-    # for key, value in rated_movies.items():
-    #     print(f"Key: {key}, Value: {value}")
+    for key, value in rated_movies.items():
+        print(f"Key: {key}, Value: {value}")
 
     rated_list = list(rated_movies.items())
     paginator = Paginator(rated_list, 5)
@@ -33,6 +35,7 @@ def get_all_movies(request):
         'page_obj': page_obj,
 
     })
+
 
 def movie_details(request, pk):
     movie = get_object_or_404(Movie, pk=pk)
@@ -74,7 +77,8 @@ def delete_movie(request, pk):
         return redirect('/')
     return render(request, 'movie/delete_movie.html', {
         'movie': movie,
-        'title': 'Usuwanie filmu',})
+        'title': 'Usuwanie filmu',
+    })
 
 
 @staff_member_required
@@ -91,4 +95,52 @@ def edit_movie(request, pk):
         'movie_form': movie_form,
         'movie': movie,
         'title': 'Edycja filmu',
-        'caption': 'Edycja filmu',})
+        'caption': 'Edycja filmu',
+    })
+
+
+@login_required
+def new_vote(request, pk):
+    movie = get_object_or_404(Movie, pk=pk) if pk else None
+
+    if request.method == 'POST':
+        vote_form = VoteForm(request.POST)
+        if vote_form.is_valid():
+            vote = vote_form.save(commit=False)
+            vote.movie = movie
+            vote.user = request.user
+            vote.save()
+            return redirect('movie:get_all_movies')
+
+    else:
+        vote_form = VoteForm()
+
+    return render(request, 'movie/vote_form.html', {
+        'caption': 'Ocena filmu',
+        'movie': movie,
+        'vote_form': vote_form,
+    })
+
+
+@login_required
+def edit_vote(request, pk):
+    vote = get_object_or_404(Vote, pk=pk) if pk else None
+
+    if vote.user != request.user:
+        raise Http404("Nie masz uprawnień do tego elementu.")
+
+    movie = vote.movie if vote else None
+
+    if request.method == 'POST':
+        vote_form = VoteForm(request.POST, instance=vote)
+        if vote_form.is_valid():
+            vote_form.save()
+            return redirect('movie:get_all_movies')
+    else:
+        vote_form = VoteForm(instance=vote)
+    return render(request, 'movie/vote_form.html', {
+        'caption': 'Edycja oceny',
+        'movie': movie,
+        'vote_form': vote_form,
+        'title': 'Edycja oceny',
+    })

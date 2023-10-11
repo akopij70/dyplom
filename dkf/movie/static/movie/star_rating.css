@@ -1,0 +1,20 @@
+.voting-stars {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.rate-button {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.star-image {
+    width: 100%;
+}
+
+.set-rate {
+    text-align: center;
+}

@@ -24,7 +24,8 @@ class Vote(models.Model):
 
     movie = models.ForeignKey(Movie, related_name='votes', on_delete=models.CASCADE)
     rating = models.DecimalField(choices=PossibleRatings.RATES, max_digits=3, decimal_places=1)
-    comment_about_the_movie = models.CharField(max_length=255, blank=True, null=True)
+    comment = models.CharField(max_length=255, blank=True, null=True)
+    # comment_about_the_movie = models.Te(max_length=255, blank=True, null=True)
     user = models.ForeignKey(User, related_name='votes', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:

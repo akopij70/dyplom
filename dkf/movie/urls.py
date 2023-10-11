@@ -10,4 +10,6 @@ urlpatterns = [
     path('new-movie-from-event/', views.new_movie, name='new_movie_from_event'),
     path('delete-movie/<int:pk>/', views.delete_movie, name='delete_movie'),
     path('edit-movie/<int:pk>/', views.edit_movie, name='edit_movie'),
+    path('new-vote/<int:pk>/', views.new_vote, name='new_vote'),
+    path('edit-vote/<int:pk>/', views.edit_vote, name='edit_vote'),
 ]

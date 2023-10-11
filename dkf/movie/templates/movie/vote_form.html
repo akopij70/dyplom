@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'core/forms.css' %}">
+    <link rel="stylesheet" href="{% static 'movie/star_rating.css' %}">
+    <link rel="stylesheet" href="{% static 'core/details.css' %}">
+
+    <div class="form-profile">
+        <div class="form-signature" > {{ caption }} </div>
+
+        <form method="post" action="." enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            <p style="text-align: center"> {{ movie }} </p>
+            <img class="movie-details-thumbnail" src={{movie.thumbnail.url}}>
+            <div class="nested-form">
+
+                <p> {{ vote_form.comment.label }}:
+                    {{ vote_form.comment }} </p>
+                <div style="margin-top: 1em;">
+                    {{ vote_form.rating.label }}: {{ vote_form.rating }}
+                    <div class="voting-stars js-voting-stars"> </div>
+                </div>
+
+                <p class="js-set-rate set-rate"> Oceniasz na: </p>
+            </div>
+            {% if vote_form.errors or vote_form.non_field_errors %}
+            <div>
+                {% for field in vote_form %}
+                    {{ field.errors }}
+                {% endfor %}
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+            <div style="text-align: center;">
+                <button type="submit" class="save-button"> Zapisz </button>
+            </div>
+        </form>
+    </div>
+    <script src="{% static 'movie/scripts/star_rating.js' %}"></script>
+
+{% endblock %}
