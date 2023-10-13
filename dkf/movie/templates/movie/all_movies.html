@@ -20,7 +20,7 @@ Tu znajdują się statystki dotyczące filmów, które graliśmy.
     {% endif %}
 </div>
 {% if request.user.is_authenticated %}
-<a href="#"> <button class="user-movies-button"> Twoje oceny </button> </a>
+<a href="{% url 'movie:your_votes' %}"> <button class="user-movies-button"> Twoje oceny </button> </a>
 {% endif %}
 
 <div class="movies-container">

@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+
+{% load l10n %}
+{% block title %} {{ title }} {% endblock %}
+
+{% block nav_statistics_active %}active{% endblock %}
+{% block content %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'core/details.css' %}">
+    <link rel="stylesheet" href="{% static 'core/edit.css' %}">
+    <link rel="stylesheet" href="{% static 'core/main.css' %}">
+    <link rel="stylesheet" href="{% static 'movie/all_movies.css' %}">
+    <link rel="stylesheet" href="{% static 'movie/votes.css' %}">
+
+Tutaj znajdują się filmy, które zostały przez Ciebie ocenione.
+<div class="movies-container">
+    {% for vote, average_rate in page_obj %}
+        <div class="single-vote">
+            <div class="vote-generally">
+                <div>
+                    <img class="vote-thumbnail" src={{vote.movie.thumbnail.url}}>
+                </div>
+                <div class="movie-rating">
+                    <div> {{ vote.movie }} </div>
+                    <div> Średnia ocena widzów: {{ average_rate }} / 8.5 </div>
+                    <div>
+                        {% localize off %}
+                            Twoja ocena: {{ vote.rating }} / 8.5
+                        {% endlocalize %}
+                    </div>
+                    <div> <a href="{% url 'movie:movie_details' vote.movie.id %}">
+                        <button class="details-button"> Szczegóły filmu </button>
+                    </a></div>
+                    <div> <a href="{% url 'movie:edit_vote' vote.id %}">
+                        <button class="edit-button"> Edytuj ocenę </button>
+                    </a></div>
+                </div>
+            </div>
+            <div class="opinion-box">
+                <div> {{ vote.user.username }}: </div>
+                <div class="opinion-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc. </div>
+            </div>
+            {% if vote.comment_about_the_movie %}
+            <div class="opinion-box">
+                <div> {{ vote.user.username }}: </div>
+                <div class="opinion-text"> {{ vote.comment_about_the_movie }}</div>
+            </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    jol
+</div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; pierwsza</a>
+            <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
+        {% endif %}
+
+        <span class="current">
+            Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">następna</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">ostatnia &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
