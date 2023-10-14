@@ -78,7 +78,7 @@ input[type=file]::file-selector-button {
     border-color: black;
 }
 
-.save-button, .signup-button, .movie-outside-the-base-button {
+.save-button, .signup-button, .movie-outside-the-base-button, .search-button {
     margin: 1em;
     width: fit-content;
     padding: 0.5em;
@@ -97,11 +97,11 @@ input[type=file]::file-selector-button {
     border-color: rgb(5, 173, 5);
 }
 
-.signup-button, .movie-outside-the-base-button{
+.signup-button, .movie-outside-the-base-button, .search-button{
     border-color: black;
 }
 
-.save-button:hover, .signup-button:hover, .movie-outside-the-base-button:hover{
+.save-button:hover, .signup-button:hover, .movie-outside-the-base-button:hover, .search-button:hover{
     color: white;
 }
 
@@ -112,7 +112,7 @@ input[type=file]::file-selector-button {
 }
 
 
-.signup-button:hover, .movie-outside-the-base-button:hover{
+.signup-button:hover, .movie-outside-the-base-button:hover, .search-button:hover{
     background-color: black;
 }
 

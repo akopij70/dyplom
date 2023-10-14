@@ -6,22 +6,39 @@
 {% block nav_statistics_active %}active{% endblock %}
 {% block content %}
 {% load static %}
-    <link rel="stylesheet" href="{% static 'movie/all_movies.css' %}">
     <link rel="stylesheet" href="{% static 'core/edit.css' %}">
+    <link rel="stylesheet" href="{% static 'core/forms.css' %}">
+    <link rel="stylesheet" href="{% static 'movie/all_movies.css' %}">
 
-Tu znajdują się statystki dotyczące filmów, które graliśmy.
+
+Tutaj znajdują się statystki dotyczące filmów, które graliśmy.
 <br>
+
 <div>
     {% if request.user.is_staff %}
-    Dzień dobry szefie
     <p>
         <a href="{% url 'movie:new_movie' %}"> <button class="add-button"> Dodaj film do bazy filmów</button> </a>
     </p>
     {% endif %}
+    {% if request.user.is_authenticated %}
+    <p>
+        <a href="{% url 'movie:your_votes' %}"> <button class="user-movies-button"> Twoje oceny filmów </button> </a>
+    </p>
+    {% endif %}
 </div>
-{% if request.user.is_authenticated %}
-<a href="{% url 'movie:your_votes' %}"> <button class="user-movies-button"> Twoje oceny </button> </a>
-{% endif %}
+
+
+<form class="search-form" method="POST" action= "{% url 'movie:search_movies'%}">
+    {% csrf_token %}
+    <input class="form-input" name="searched_movies" type="search" placeholder="Wyszukaj film">
+    <button class="search-button"> Szukaj </button>
+</form>
+
+<form class="filter-form" method="GET" action= "{% url 'movie:filter_movies'%}">
+    {% csrf_token %}
+    {{ filter_form.as_p }}
+    <button class="search-button"> Szukaj </button>
+</form>
 
 <div class="movies-container">
     {% for movie, rate in page_obj %}

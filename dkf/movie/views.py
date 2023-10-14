@@ -5,13 +5,25 @@ from django.db.models import Avg
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import MovieForm, VoteForm
+from .forms import MovieForm, VoteForm, MovieFilterForm, FilterRanges
 from .models import Movie, Vote
 
 
+def get_average_rate_for_movielist(movies):
+    rated_movies = {}
+    for movie in movies:
+        rate = Vote.objects.filter(movie__title=movie.title).aggregate(Avg("rating"))['rating__avg']
+        rated_movies.update({movie: rate})
+
+    for key, value in rated_movies.items():
+        print(f"Key: {key}, Value: {value}")
+
+
+
 def get_all_movies(request):
+    filter_form = MovieFilterForm(request.GET)
     movies = Movie.objects.all()
-    votes = Vote.objects.all()
+    # votes = Vote.objects.all()
     rated_movies = {}
 
     for movie in movies:
@@ -28,12 +40,12 @@ def get_all_movies(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'movie/all_movies.html', {
-        'rated_movies': rated_movies,
-        'title': 'Filmy',
-        'movies': movies,
-        'votes': votes,
+        # 'rated_movies': rated_movies,
+        'filter_form': filter_form,
         'page_obj': page_obj,
-
+        'title': 'Filmy',
+        # 'movies': movies,
+        # 'votes': votes,
     })
 
 
@@ -110,6 +122,7 @@ def new_vote(request, pk):
             vote.movie = movie
             vote.user = request.user
             vote.save()
+            movie.calculate_average_rating()
             return redirect('movie:get_all_movies')
 
     else:
@@ -169,3 +182,79 @@ def get_user_votes(request):
         'title': 'Twoje oceny',
         'user_votes': user_votes,
     })
+
+
+def search_movies(request):
+    if request.method == 'POST':
+        searched_movies = request.POST['searched_movies']
+        if searched_movies:
+            movies = Movie.objects.filter(title__contains=searched_movies)
+        else:
+            return redirect('movie:get_all_movies')
+
+        return render(request, 'movie/search_movies.html', {
+            'movies': movies,
+            'searched_movies': searched_movies,
+        })
+
+    else:
+        return redirect('/movies')
+
+
+def filter_movies(request):
+    if request.method == 'GET':
+        print("czesc")
+        filter_form = MovieFilterForm(request.GET)
+        rated_movies = {}
+        movies = Movie.objects.none()
+        movies_by_director = Movie.objects.none()
+        movies_by_year = Movie.objects.none()
+        movies_by_rating = Movie.objects.none()
+
+        if filter_form.is_valid():
+            print('siema')
+            director = filter_form.cleaned_data.get('director')
+            rating = filter_form.cleaned_data.get('rating')
+            year = filter_form.cleaned_data.get('year')
+
+            if director:
+                movies_by_director = Movie.objects.filter(director__contains=director)
+            if rating != 0:
+                movies_by_rating = Movie.objects.filter(director__contains=director)
+                movies = movies_by_director
+            if year != 0:
+                start = FilterRanges.PossibleYears[year][0]
+                stop = FilterRanges.PossibleYears[year][1]
+                print(f'{year} {start} {stop}')
+                # print(year)
+                movies_by_year = Movie.objects.filter(release_date__range=(start, stop))
+                if movies:
+                    movies = movies.intersection(movies_by_year)
+                else:
+                    movies = movies_by_year
+
+            for movie in movies:
+                rate = Vote.objects.filter(movie__title=movie.title).aggregate(Avg("rating"))['rating__avg']
+                rated_movies.update({movie: rate})
+
+            for key, value in rated_movies.items():
+                print(f"Key: {key}, Value: {value}")
+
+            rated_list = list(rated_movies.items())
+            paginator = Paginator(rated_list, 5)
+
+            page_number = request.GET.get("page")
+            page_obj = paginator.get_page(page_number)
+
+            if movies:
+                return render(request, 'movie/all_movies.html', {
+                    # 'rated_movies': rated_movies,
+                    'filter_form': filter_form,
+                    'page_obj': page_obj,
+                    'title': 'Filmy',
+                    # 'movies': movies,
+                    # 'votes': votes,
+                })
+
+    return redirect('movie:get_all_movies')
+
