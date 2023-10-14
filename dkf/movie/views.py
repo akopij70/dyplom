@@ -9,43 +9,19 @@ from .forms import MovieForm, VoteForm, MovieFilterForm, FilterRanges
 from .models import Movie, Vote
 
 
-def get_average_rate_for_movielist(movies):
-    rated_movies = {}
-    for movie in movies:
-        rate = Vote.objects.filter(movie__title=movie.title).aggregate(Avg("rating"))['rating__avg']
-        rated_movies.update({movie: rate})
-
-    for key, value in rated_movies.items():
-        print(f"Key: {key}, Value: {value}")
-
-
-
 def get_all_movies(request):
     filter_form = MovieFilterForm(request.GET)
     movies = Movie.objects.all()
-    # votes = Vote.objects.all()
-    rated_movies = {}
 
-    for movie in movies:
-        rate = Vote.objects.filter(movie__title=movie.title).aggregate(Avg("rating"))['rating__avg']
-        rated_movies.update({movie: rate})
-
-    for key, value in rated_movies.items():
-        print(f"Key: {key}, Value: {value}")
-
-    rated_list = list(rated_movies.items())
-    paginator = Paginator(rated_list, 5)
+    paginator = Paginator(movies, 5)
 
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'movie/all_movies.html', {
-        # 'rated_movies': rated_movies,
         'filter_form': filter_form,
         'page_obj': page_obj,
         'title': 'Filmy',
-        # 'movies': movies,
-        # 'votes': votes,
     })
 
 
@@ -162,25 +138,15 @@ def edit_vote(request, pk):
 @login_required
 def get_user_votes(request):
     current_user = request.user
-    all_votes = Vote.objects.all()
     votes = Vote.objects.filter(user=current_user)
-    user_votes = {}
-    for vote in votes:
-        movie = vote.movie
-        average_rate = all_votes.filter(movie__title=movie.title).aggregate(Avg("rating"))['rating__avg']
-        average_rate = f'{average_rate: .1f}'
-        user_votes.update({vote: average_rate})
-
-    rated_list = list(user_votes.items())
-    paginator = Paginator(rated_list, 5)
-
+    paginator = Paginator(votes, 5)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'movie/user_votes.html', {
         'page_obj': page_obj,
         'title': 'Twoje oceny',
-        'user_votes': user_votes,
+        'user_votes': votes,
     })
 
 

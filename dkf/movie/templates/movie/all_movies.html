@@ -41,7 +41,7 @@ Tutaj znajdują się statystki dotyczące filmów, które graliśmy.
 </form>
 
 <div class="movies-container">
-    {% for movie, rate in page_obj %}
+    {% for movie in page_obj %}
         <div class="single-movie">
             <a href="{% url 'movie:movie_details' movie.id %}" style="text-decoration: none; color: inherit;">
             <div class="description">
@@ -50,10 +50,10 @@ Tutaj znajdują się statystki dotyczące filmów, które graliśmy.
                 </div>
                 <div class="movie-rating">
                     <div> {{ movie }} </div>
-                    {% if rate %}
+                    {% if movie.average_rating %}
                         <div class="js-average-rating"> Średnia ocena widzów:
                         {% localize off %}
-                            {{ rate }}
+                            {{ movie.average_rating }}
                         {% endlocalize %}
                         / 8.5 </div>
                     {% endif %}

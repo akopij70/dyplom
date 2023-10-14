@@ -14,7 +14,7 @@
 
 Tutaj znajdują się filmy, które zostały przez Ciebie ocenione.
 <div class="movies-container">
-    {% for vote, average_rate in page_obj %}
+    {% for vote in page_obj %}
         <div class="single-vote">
             <div class="vote-generally">
                 <div>
@@ -22,7 +22,11 @@ Tutaj znajdują się filmy, które zostały przez Ciebie ocenione.
                 </div>
                 <div class="movie-rating">
                     <div> {{ vote.movie }} </div>
-                    <div> Średnia ocena widzów: {{ average_rate }} / 8.5 </div>
+                    <div> Średnia ocena widzów:
+                        {% localize off %}
+                            {{ vote.movie.average_rating }} / 8.5
+                        {% endlocalize %}
+                    </div>
                     <div>
                         {% localize off %}
                             Twoja ocena: {{ vote.rating }} / 8.5
