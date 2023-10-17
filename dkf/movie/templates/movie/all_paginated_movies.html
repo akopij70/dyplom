@@ -1,0 +1,50 @@
+{% load l10n %}
+<div class="movies-container">
+        {% for movie in page_obj %}
+            <div class="single-movie">
+                <a href="{% url 'movie:movie_details' movie.id %}" style="text-decoration: none; color: inherit;">
+                <div class="description">
+                    <div>
+                        <img class="movie-thumbnail" src={{movie.thumbnail.url}}>
+                    </div>
+                    <div class="movie-rating">
+                        <div> {{ movie }} </div>
+                        {% if movie.average_rating %}
+                            <div class="js-average-rating"> Średnia ocena widzów:
+                            {% localize off %}
+                                {{ movie.average_rating }}
+                            {% endlocalize %}
+                            / 8.5 </div>
+                        {% endif %}
+                    </div>
+                </div>
+                </a>
+
+                {% if request.user.is_staff %}
+                <div class="edit">
+                    <a href="{% url 'movie:edit_movie' movie.id %}"> <button class="edit-button"> Edytuj </button> </a>
+                    <a href="{% url 'movie:delete_movie' movie.id %}"> <button class="delete-button"> Usuń </button> </a>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        jol
+    </div>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; pierwsza</a>
+                <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
+            {% endif %}
+
+            <span class="current">
+                Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">następna</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">ostatnia &raquo;</a>
+            {% endif %}
+        </span>
+    </div>

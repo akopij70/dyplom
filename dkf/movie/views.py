@@ -1,7 +1,7 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.views import login_required
-from django.core.paginator import Paginator
-from django.db.models import Avg
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Avg, Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -18,10 +18,11 @@ def get_all_movies(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'movie/all_movies.html', {
+    return render(request, 'movie/general_movies.html', {
         'filter_form': filter_form,
         'page_obj': page_obj,
         'title': 'Filmy',
+        'included_template_name': 'movie/all_paginated_movies.html',
     })
 
 
@@ -150,77 +151,75 @@ def get_user_votes(request):
     })
 
 
-def search_movies(request):
-    if request.method == 'POST':
-        searched_movies = request.POST['searched_movies']
-        if searched_movies:
-            movies = Movie.objects.filter(title__contains=searched_movies)
-        else:
-            return redirect('movie:get_all_movies')
-
-        return render(request, 'movie/search_movies.html', {
-            'movies': movies,
-            'searched_movies': searched_movies,
-        })
-
-    else:
-        return redirect('/movies')
+# def search_movies(request):
+#     if request.method == 'POST':
+#         searched_movies = request.POST['searched_movies']
+#         if searched_movies:
+#             movies = Movie.objects.filter(title__contains=searched_movies)
+#         else:
+#             return redirect('movie:get_all_movies')
+#
+#         print(searched_movies)
+#
+#         return render(request, 'movie/general_movies.html', {
+#             'movies': movies,
+#             'searched_movies': searched_movies,
+#             'included_template_name': 'movie/searched_and_filtered_movies.html'
+#         })
+#
+#     else:
+#         return redirect('/movies')
 
 
 def filter_movies(request):
     if request.method == 'GET':
-        print("czesc")
         filter_form = MovieFilterForm(request.GET)
-        rated_movies = {}
+
         movies = Movie.objects.none()
-        movies_by_director = Movie.objects.none()
-        movies_by_year = Movie.objects.none()
-        movies_by_rating = Movie.objects.none()
 
         if filter_form.is_valid():
-            print('siema')
+            movie_title = filter_form.cleaned_data.get('title')
             director = filter_form.cleaned_data.get('director')
             rating = filter_form.cleaned_data.get('rating')
             year = filter_form.cleaned_data.get('year')
+            context_year = []
+            context_rate = []
+
+            if movie_title:
+                movies = Movie.objects.filter(title__contains=movie_title)
 
             if director:
-                movies_by_director = Movie.objects.filter(director__contains=director)
-            if rating != 0:
-                movies_by_rating = Movie.objects.filter(director__contains=director)
-                movies = movies_by_director
-            if year != 0:
+                if movies:
+                    movies = movies.filter(director__contains=director)
+                else:
+                    movies = Movie.objects.filter(director__contains=director)
+
+            if rating and rating != 0:
+                start = FilterRanges.PossibleRates[rating][0]
+                stop = FilterRanges.PossibleRates[rating][1]
+                if movies:
+                    movies = movies.filter(average_rating__range=(start, stop))
+                else:
+                    movies = Movie.objects.filter(average_rating__range=(start, stop))
+                context_rate = [rating, FilterRanges.PossibleRates[rating][2]]
+            if year and year != 0:
                 start = FilterRanges.PossibleYears[year][0]
                 stop = FilterRanges.PossibleYears[year][1]
-                print(f'{year} {start} {stop}')
-                # print(year)
-                movies_by_year = Movie.objects.filter(release_date__range=(start, stop))
                 if movies:
-                    movies = movies.intersection(movies_by_year)
+                    movies = movies.filter(release_date__range=(start, stop))
                 else:
-                    movies = movies_by_year
-
-            for movie in movies:
-                rate = Vote.objects.filter(movie__title=movie.title).aggregate(Avg("rating"))['rating__avg']
-                rated_movies.update({movie: rate})
-
-            for key, value in rated_movies.items():
-                print(f"Key: {key}, Value: {value}")
-
-            rated_list = list(rated_movies.items())
-            paginator = Paginator(rated_list, 5)
-
-            page_number = request.GET.get("page")
-            page_obj = paginator.get_page(page_number)
-
+                    movies = Movie.objects.filter(release_date__range=(start, stop))
+                context_year = [year, FilterRanges.PossibleYears[year][2]]
             if movies:
-                return render(request, 'movie/all_movies.html', {
-                    # 'rated_movies': rated_movies,
+                return render(request, 'movie/general_movies.html', {
+                    'year': context_year,
+                    'rate': context_rate,
+                    'director': director,
                     'filter_form': filter_form,
-                    'page_obj': page_obj,
+                    'included_template_name': 'movie/searched_and_filtered_movies.html',
+                    'movies': movies,
+                    'movie_title': movie_title,
                     'title': 'Filmy',
-                    # 'movies': movies,
-                    # 'votes': votes,
                 })
 
     return redirect('movie:get_all_movies')
-

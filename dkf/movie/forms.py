@@ -11,6 +11,7 @@ class FilterRanges:
         (3, 4, '3 - 4'),
         (4, 5, '4 - 5'),
         (5, 6, '5 - 6'),
+        (6, 7, '6 - 7'),
         (7, 8, '7 - 8'),
         (8, 8.5, 'od 8'),
     ]
@@ -74,10 +75,12 @@ class MovieFilterForm(forms.ModelForm):
 
     class Meta:
         model = Movie
-        fields = ['director', 'rating', 'year']
+        fields = ['title', 'director', 'rating', 'year']
 
     class RateRangeField(forms.IntegerField):
-        widget = forms.Select(choices=[(i, FilterRanges.PossibleRates[i][2]) for i in range(len(FilterRanges.PossibleRates))])
+        widget = forms.Select(
+            choices=[(i, FilterRanges.PossibleRates[i][2]) for i in range(len(FilterRanges.PossibleRates))],
+            attrs={'class': 'filter-select'})
 
         # widget = forms.Select(choices=[
         #     ('poniżej 2', 'poniżej 2'),
@@ -91,7 +94,9 @@ class MovieFilterForm(forms.ModelForm):
         # ])
 
     class YearRangeField(forms.IntegerField):
-        widget = forms.Select(choices=[(i, FilterRanges.PossibleYears[i][2]) for i in range(len(FilterRanges.PossibleYears))])
+        widget = forms.Select(
+            choices=[(i, FilterRanges.PossibleYears[i][2]) for i in range(len(FilterRanges.PossibleYears))],
+            attrs={'class': 'filter-select'})
         # widget = forms.Select(choices=[
         #     (0, 'przed 1950'),
         #     (1, '1950-1960'),
@@ -104,7 +109,11 @@ class MovieFilterForm(forms.ModelForm):
         #     (8, 'po 2020'),
         # ])
 
-    director = forms.CharField(label='Reżyser', max_length=255, required=False)
+    title = director = forms.CharField(label='Tytuł', max_length=255, required=False,
+                                       widget=forms.TextInput(attrs={'class': 'search-input',
+                                                                     'placeholder': 'Wyszukaj film'}))
+    director = forms.CharField(label='Reżyser', max_length=255, required=False,
+                               widget=forms.TextInput(attrs={'class': 'filter-input'}))
     rating = RateRangeField(label='Ocena widzów', required=False)
     year = YearRangeField(label='Rok premiery', required=False)
 

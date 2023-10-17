@@ -1,0 +1,48 @@
+{% load l10n %}
+<div style="text-align: center">
+        Wyniki wyszukiwań dla:
+        {% if movie_title %}
+        	<p> Tytuł: {{ movie_title }} </p>
+        {% endif %}
+        {% if director %}
+            <p> Reżyser: {{ director }} </p>
+        {% endif %}
+        {% if year %}
+            <p> Data premiery: {{ year.1 }} </p>
+        {% endif %}
+        {% if rate %}
+            <p> Średnia ocena: {{ rate.1 }} </p>
+        {% endif %}
+    </div>
+
+    <div class="movies-container">
+        {% for movie in movies %}
+            <div class="single-movie">
+                <a href="{% url 'movie:movie_details' movie.id %}" style="text-decoration: none; color: inherit;">
+                <div class="description">
+                    <div>
+                        <img class="movie-thumbnail" src={{movie.thumbnail.url}}>
+                    </div>
+                    <div class="movie-rating">
+                        <div> {{ movie }} </div>
+                        {% if movie.average_rating %}
+                            <div class="js-average-rating"> Średnia ocena widzów:
+                            {% localize off %}
+                                {{ movie.average_rating }}
+                            {% endlocalize %}
+                            / 8.5 </div>
+                        {% endif %}
+                    </div>
+                </div>
+                </a>
+
+                {% if request.user.is_staff %}
+                <div class="edit">
+                    <a href="{% url 'movie:edit_movie' movie.id %}"> <button class="edit-button"> Edytuj </button> </a>
+                    <a href="{% url 'movie:delete_movie' movie.id %}"> <button class="delete-button"> Usuń </button> </a>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        jol
+    </div>

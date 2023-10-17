@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block nav_statistics_active %}active{% endblock %}
+{% block content %}
+    {% load static %}
+        <link rel="stylesheet" href="{% static 'core/edit.css' %}">
+        <link rel="stylesheet" href="{% static 'core/filters.css' %}">
+        <link rel="stylesheet" href="{% static 'core/forms.css' %}">
+        <link rel="stylesheet" href="{% static 'movie/all_movies.css' %}">
+
+    Tutaj znajdują się statystki dotyczące filmów, które graliśmy.
+    <br>
+
+    <div>
+        {% if request.user.is_staff %}
+        <p>
+            <a href="{% url 'movie:new_movie' %}"> <button class="add-button"> Dodaj film do bazy filmów</button> </a>
+        </p>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+        <p>
+            <a href="{% url 'movie:your_votes' %}"> <button class="user-movies-button"> Twoje oceny filmów </button> </a>
+        </p>
+        {% endif %}
+    </div>
+
+    <form class="filter-form" method="GET" action= "{% url 'movie:filter_movies'%}">
+        {% csrf_token %}
+        <div class="search-movie">
+            {{ filter_form.title }} <button class="search-movie-button"> <img class="search-icon" src="{% static 'movie/images/search.png' %}"> </button>
+        </div>
+        <button type="button" class="show-filters-button js-show-filters-button"> Pokaż filtry </button>
+        <div class="filters js-filters">
+            <p> {{ filter_form.director.label }}: {{ filter_form.director }} </p>
+            <p> {{ filter_form.year.label }}: {{ filter_form.year }} </p>
+            <p> {{ filter_form.rating.label }}: {{ filter_form.rating }} </p>
+            <button class="log-button"> Filtruj </button>
+        </div>
+    </form>
+    <script> let searchedMovies =`{{ movie_title }}`; </script>
+    <script src="{% static 'movie/scripts/filters.js' %}"></script>
+
+    {% include included_template_name %}
+{% endblock %}
