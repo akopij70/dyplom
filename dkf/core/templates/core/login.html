@@ -27,7 +27,11 @@
             </div>
         </form>
         <div>
+            Zapomniałeś hasła? <a href={% url 'core:reset_password' %}> Reset hasła </a>
+        </div>
+        <div>
             Nie masz konta? <a href={% url 'core:signup' %}> <button class="signup-button"> Utwórz je </button> </a>
         </div>
+
     </div>
 {% endblock %}

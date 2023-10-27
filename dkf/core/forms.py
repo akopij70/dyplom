@@ -1,5 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, SetPasswordForm, PasswordResetForm
 from django.contrib.auth.models import User
 
 
@@ -35,3 +36,29 @@ class LoginForm(AuthenticationForm):
     password = forms.CharField(label='Hasło:', widget=forms.PasswordInput(
         attrs={'placeholder': 'Twoje hasło',
                'class': 'form-input'}))
+
+
+class SetPasswordForm(SetPasswordForm):
+    class Meta:
+        model = get_user_model()
+        fields = ('new_password1', 'new_password2')
+
+    new_password1 = forms.CharField(label='Nowe hasło:', max_length=35, widget=forms.PasswordInput(
+        attrs={'placeholder': 'Ustaw nowe hasło',
+               'class': 'form-input'})
+                                )
+
+    new_password2 = forms.CharField(label='Powtórz nowe hasło:', max_length=35, widget=forms.PasswordInput(
+        attrs={'placeholder': 'Powtórz nowe hasło',
+               'class': 'form-input'})
+                                )
+
+
+class PasswordResetForm(PasswordResetForm):
+    class Meta:
+        fields = 'email'
+
+    email = forms.CharField(label='Email:', max_length=250, widget=forms.EmailInput(
+        attrs={'placeholder': 'Twój adres email',
+               'class': 'form-input'}))
+

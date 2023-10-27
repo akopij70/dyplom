@@ -22,6 +22,12 @@ button {
     margin-bottom: 20px;
 }
 
+.message {
+    background-color: rgb(218, 218, 218);
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 1em;
+}
 
 @media only screen and (min-width: 730px) {
     .welcoming-text {
