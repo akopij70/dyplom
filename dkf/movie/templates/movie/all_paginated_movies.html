@@ -21,10 +21,15 @@
                 </a>
 
                 {% if request.user.is_staff %}
-                <div class="edit">
-                    <a href="{% url 'movie:edit_movie' movie.id %}"> <button class="edit-button"> Edytuj </button> </a>
-                    <a href="{% url 'movie:delete_movie' movie.id %}"> <button class="delete-button"> Usuń </button> </a>
-                </div>
+                    <div class="edit">
+                        <a href="{% url 'movie:edit_movie' movie.id %}"> <button class="edit-button"> Edytuj </button> </a>
+                        <a href="{% url 'movie:new_vote' movie.id %}"> <button class="details-button"> Oceń film </button> </a>
+                        <a href="{% url 'movie:delete_movie' movie.id %}"> <button class="delete-button"> Usuń </button> </a>
+                    </div>
+                    {% else %}
+                    <div class="edit">
+                        <a href="{% url 'movie:new_vote' movie.id %}"> <button class="details-button"> Oceń film </button> </a>
+                    </div>
                 {% endif %}
             </div>
         {% endfor %}
