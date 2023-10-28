@@ -54,10 +54,12 @@
 
 .right-side {
     height: 100%;
-    margin-right: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-right: 15px;
+
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
 }
 
 .log-button  {
@@ -79,6 +81,53 @@
     background-color: rgb(59, 59, 59);
     border-color: rgb(59, 59, 59);
 }
+
+.toggle {
+    height: 100%;
+    text-align: center;
+}
+
+.login-area {
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-button {
+    border: none;
+    background-color: white;
+    color: rgb(109, 108, 108);
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    height: 100%;
+}
+
+.account-menu {
+    background-color: rgb(59, 59, 59);
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.2em;
+    transform: scaleY(0);
+    transition: 0.3s;
+}
+
+.menu-option {
+    background-color: rgb(59, 59, 59);
+    color: rgb(180, 180, 180);
+    padding: 0.3em;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.menu-option:hover {
+    background-color: rgb(180, 180, 180);
+    color: rgb(59, 59, 59);
+}
+
 
 @media only screen and (min-width: 730px) {
     .header {
