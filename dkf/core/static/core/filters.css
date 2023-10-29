@@ -20,29 +20,11 @@
     margin-top: 1em;
     width: 100%;
     display: flex;
+    transform: scale(0);
+    transform-origin: top;
     background-color: rgb(218, 218, 218);
-    /*background-color: rgb(59, 59, 59);*/
-    transition: opacity 0.3s;
-}
-
-.visible-filters {
-    opacity: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    border-style: solid;
-    border-radius: 10px;
-    border-color: rgb(59, 59, 59);
-}
-
-.hidden-filters {
-    opacity: 0;
-    display: none;
-    width: 100%;
-    border-style: solid;
-    border-radius: 10px;
-    border-color: rgb(59, 59, 59);
+    color: rgb(59, 59, 59);
+    transition: all 0.9s;
 }
 
 .search-movie {
@@ -127,12 +109,15 @@
     color: rgb(59, 59, 59);
     cursor: pointer;
     font-weight: bold;
-    font-size: 1em;
+    /*font-size: 1em;*/
 }
 
 @media only screen and (max-width: 729px) {
     .filters {
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 1em;
     }
 
     .search-input {

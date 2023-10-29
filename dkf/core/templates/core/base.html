@@ -29,6 +29,7 @@
                         <button class="toggle-button js-toggle-button"> Konto </button>
                     </div>
                     <div class="account-menu js-account-menu">
+                        <a class="menu-option" href="#"> {{ request.user.username }} </a>
                         <a class="menu-option" href="{% url 'movie:your_votes' %}"> Twoje oceny </a>
                         <a class="menu-option" href="{% url 'core:logout' %}"> Wyloguj się  </a>
                         <a class="menu-option" href="{% url 'core:change_password' %}"> Zmień hasło </a>

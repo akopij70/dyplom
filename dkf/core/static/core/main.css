@@ -29,6 +29,19 @@ button {
     padding: 1em;
 }
 
+.page-description {
+    background-color: rgb(218, 218, 218);
+    color: rgb(59, 59, 59);
+    text-decoration: none;
+    padding: 0.2em;
+    transition: all 0.3s;
+}
+
+.page-description:hover {
+    background-color: rgb(59, 59, 59);
+    color: rgb(218, 218, 218);
+}
+
 @media only screen and (min-width: 730px) {
     .welcoming-text {
         font-size: 35px;

@@ -1,7 +1,7 @@
 let areFiltersVisible = false;
 let filters = document.querySelector(".js-filters");
-filters.style.display = "none";
-// let filtersForm = document.getElementById('js-filters');
+
+filters.style.transform = 'scale(0)';
 console.log(searchedMovies);
 
 let input =  document.querySelector('.search-input');
@@ -14,22 +14,10 @@ showFiltersButton
     .addEventListener('click', () => {
         areFiltersVisible = !areFiltersVisible;
         if (areFiltersVisible) {
-            // filtersForm.classList.remove('hidden-filters');
-            // filtersForm.classList.add('visible-filters');
-            filters.style.display = "flex";
+            filters.style.transform = 'scale(1)';
             showFiltersButton.innerHTML = 'Schowaj filtry';
         } else {
-            // filtersForm.classList.remove('visible-filters');
-            // filtersForm.classList.add('hidden-filters');
-            filters.style.display = "none";
+            filters.style.transform = 'scale(0)';
             showFiltersButton.innerHTML = 'Pokaż filtry';
         }
-        // if (areFiltersVisible) {
-        //     filters.style.display = "flex";
-        //     showFiltersButton.innerHTML = 'Schowaj filtry';
-        // }
-        // else {
-        //     filters.style.display = "none";
-        //     showFiltersButton.innerHTML = 'Pokaż filtry';
-        // }
     })
