@@ -21,7 +21,7 @@
                 <a class="single-link {% block nav_index_active %}{% endblock %}" href="{% url 'core:index' %}">Aktualności</a>
                 <a class="single-link {% block nav_all_events_active %}{% endblock %}" href="{% url 'event:all_events' %}">Wydarzenia</a>
                 <a class="single-link {% block nav_statistics_active %}{% endblock %}" href="{% url 'movie:get_all_movies' %}">Filmy</a>
-                <a class="single-link {% block nav_contact_active %}{% endblock %}" href="#">O nas</a>
+                <a class="single-link {% block nav_contact_active %}{% endblock %}" href="{% url 'core:contact' %}">O nas</a>
             </nav>
             <div class="right-side">
                 {% if request.user.is_authenticated %}

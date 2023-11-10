@@ -1,0 +1,82 @@
+.motto {
+    font-weight: bold;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-us {
+    margin-top: 1em;
+    text-align: justify;
+}
+
+.contact-signature{
+    font-weight: bold;
+    margin-top: 1.5em;
+    text-align: center;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.2em;
+    margin-top: 1em;
+}
+
+.social-media {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.single-logo-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.single-logo-img {
+    display: flex;
+    width: 45%;
+    aspect-ratio: 1 / 1;
+    padding: 25%;
+    min-width: 16px;    /* policy */
+    object-position: center;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+}
+
+.single-logo-img:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}
+
+@media only screen and (max-width: 729px) {
+    .motto {
+        font-size: 20px;
+    }
+    .social-media, .about-us {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 730px) {
+    .motto {
+        font-size: 25px;
+    }
+
+    .about-us {
+        width: 60%;
+    }
+
+    .social-media {
+        width: 50%;
+    }
+}

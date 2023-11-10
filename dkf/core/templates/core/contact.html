@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block nav_contact_active %}active{% endblock %}
+{% block content %}
+    {% load static %}
+    <link rel="stylesheet" href={% static 'core/contact.css' %}>
+
+    <div class="contact-info">
+        <div class="motto"> Prelekcja - Film - Dyskusja </div>
+        <div class="about-us">
+            Dyskusyjny Klub Filmowy Politechnika na Politechnice Wrocławskiej działa już od ponad 60 lat.
+            Przez ten czas wiele się zmieniało ale jedno pozostało niezmienne: cotygodniowe pokazy czwartkowe.
+            Odbywają się niezmiennie w każdy czwartek o godzinie 19, w sali 329 budynku A1 Politechniki Wrocławskiej.
+            Te wydarzenia są darmowe, mimo to warto wesprzeć nas na platformie
+            <a style="text-decoration: none; font-weight: bold; color: inherit;" href="https://patronite.pl/dkfpolitechnika">Patronite</a>,
+            dzięki czemu będziemy mogli organizować więcej pokazów specjalnych i dalej się rozwijać.
+        <div class="contact-signature"> Dane kontaktowe: </div>
+        <div class="contact-details">
+            <div> Adres e-mail: dkfpolitechnika@gmail.com </div>
+            <div> Adres: wyb. Wyspiańskiego 27, bud. A-1, sala 329 (II piętro), Wroclaw, Poland, 50-370 </div>
+        </div>
+        </div>
+
+        <div class="contact-signature"> Obserwuj nas na: </div>
+        <div class="social-media ">
+            <div class="single-logo-area">
+                <div class="single-logo-img">
+                    <a href="https://www.facebook.com/dkfpolitechnika"> <img style="width: 100%;" src={% static 'core/images/Facebook_Logo_Primary.png' %}> </a>
+                </div>
+            </div>
+            <div class="single-logo-area">
+                <div class="single-logo-img" >
+                    <a href="https://www.instagram.com/dkfpolitechnika/"> <img style="width: 100%;" src={% static 'core/images/Instagram_Glyph_Gradient.png' %}> </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
