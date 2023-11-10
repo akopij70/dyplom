@@ -26,14 +26,13 @@
                         <a href="{% url 'movie:new_vote' movie.id %}"> <button class="details-button"> Oceń film </button> </a>
                         <a href="{% url 'movie:delete_movie' movie.id %}"> <button class="delete-button"> Usuń </button> </a>
                     </div>
-                    {% else %}
+                    {% elif request.user.is_authenticated %}
                     <div class="edit">
                         <a href="{% url 'movie:new_vote' movie.id %}"> <button class="details-button"> Oceń film </button> </a>
                     </div>
                 {% endif %}
             </div>
         {% endfor %}
-        jol
     </div>
 
     <div class="pagination">

@@ -43,12 +43,20 @@ button {
 }
 
 @media only screen and (min-width: 730px) {
+    body {
+        font-size: 16px;
+    }
+
     .welcoming-text {
         font-size: 35px;
     }
 }
 
 @media only screen and (max-width: 729px) {
+    body {
+        font-size: 12px;
+    }
+
     .welcoming-text{
         font-size: 22px;
     }

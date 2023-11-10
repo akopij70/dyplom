@@ -1,7 +1,7 @@
 let areFiltersVisible = false;
 let filters = document.querySelector(".js-filters");
 
-filters.style.transform = 'scale(0)';
+filters.style.transform = 'scaleY(0)';
 console.log(searchedMovies);
 
 let input =  document.querySelector('.search-input');
@@ -14,10 +14,10 @@ showFiltersButton
     .addEventListener('click', () => {
         areFiltersVisible = !areFiltersVisible;
         if (areFiltersVisible) {
-            filters.style.transform = 'scale(1)';
+            filters.style.transform = 'scaleY(1)';
             showFiltersButton.innerHTML = 'Schowaj filtry';
         } else {
-            filters.style.transform = 'scale(0)';
+            filters.style.transform = 'scaleY(0)';
             showFiltersButton.innerHTML = 'Pokaż filtry';
         }
     })

@@ -38,25 +38,19 @@
 .single-logo-area {
     flex: 1;
     display: flex;
-    justify-content: center;
+    /*justify-content: normal;*/
     align-items: center;
 }
 
 
 .single-logo-img {
     display: flex;
-    width: 45%;
     aspect-ratio: 1 / 1;
-    padding: 25%;
     min-width: 16px;    /* policy */
     object-position: center;
     object-fit: cover;
-    transition: all 0.3s ease-in-out;
 }
 
-.single-logo-img:hover {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-}
 
 @media only screen and (max-width: 729px) {
     .motto {
@@ -64,6 +58,11 @@
     }
     .social-media, .about-us {
         width: 100%;
+    }
+
+    .single-logo-img {
+        width: 45%;
+        padding: 25%;
     }
 }
 
@@ -78,5 +77,10 @@
 
     .social-media {
         width: 50%;
+    }
+
+    .single-logo-img {
+        width: 15%;
+        padding: 8%;
     }
 }
