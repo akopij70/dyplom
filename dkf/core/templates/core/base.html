@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="{% static 'core/header.css' %}">
         <link rel="stylesheet" href="{% static 'core/main.css' %}">
         <link rel="stylesheet" href="{% static 'core/footer.css' %}">
+        <link rel="stylesheet" href={% static 'core/contact.css' %}>
 
         <title>{% block title %}{% endblock %} | DKF </title>
 
@@ -58,16 +59,26 @@
             {% endblock %}
         </main>
         <footer class="footer">
-            <div>
-                <h3>O nas</h3>
-                <p>Jakis opis.</p>
+            <div style="font-weight: bold; margin: 0.5em;">
+                Kontakt:
             </div>
-            <div>
-                <h3>Więcej</h3>
-                <ul>
-                    <li><a href="#" style="text-decoration: none; color: inherit;"> Informacje </a></li>
-                    <li><a href="#" style="text-decoration: none; color: inherit;">Kontakt</a></li>
-                </ul>
+            <div class="footer-info">
+                <div>
+                    dkfpolitechnika@gmail.com
+                </div>
+                <div class="single-footer-logo-img">
+                    <a href="https://www.facebook.com/dkfpolitechnika">
+                        <img style="width: 100%;" src={% static 'core/images/Facebook_Logo_Secondary.png' %}> </a>
+                    </a>
+                </div>
+                <div class="single-footer-logo-img">
+                    <a href="https://www.instagram.com/dkfpolitechnika/">
+                        <img style="width: 100%" src={% static 'core/images/Instagram_Glyph_white.png' %}> </a>
+                    </a>
+                </div>
+            </div>
+            <div style="text-align: center; padding-bottom: 0.5em;">
+                Dyskusyjny Klub Filmowy Politechnika na Politechnice Wrocławskiej
             </div>
         </footer>
     </body>
