@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{% static 'core/edit.css' %}">
 
     <div>
-    Dzień dobry szefie
     {% if request.user.is_staff %}
     <p>
         <a href="{% url 'movie:new_movie' %}"> <button class="add-button"> Dodaj film do bazy filmów</button> </a>

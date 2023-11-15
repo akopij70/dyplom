@@ -32,7 +32,7 @@ class Vote(models.Model):
     movie = models.ForeignKey(Movie, related_name='votes', on_delete=models.CASCADE)
     rating = models.DecimalField(choices=PossibleRatings.RATES, max_digits=3, decimal_places=1)
     comment = models.CharField(max_length=255, blank=True, null=True)
-    user = models.ForeignKey(User, related_name='votes', on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(User, related_name='votes', on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('user', 'movie')

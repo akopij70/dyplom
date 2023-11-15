@@ -54,7 +54,7 @@ def new_movie(request):
     return render(request, 'movie/new_movie.html', {
         'movie_form': movie_form,
         'title': 'Nowy film',
-        'caption': 'Tworzenie nowego filmu',
+        'caption': 'Dodawanie nowego filmu',
     })
 
 
@@ -91,7 +91,12 @@ def edit_movie(request, pk):
 @login_required
 def new_vote(request, pk):
     movie = get_object_or_404(Movie, pk=pk) if pk else None
-
+    current_user = request.user
+    user_vote = Vote.objects.filter(user_id=current_user, movie_id=pk).first()
+    # user_vote = Vote.objects.get(user_id=current_user, movie_id=pk)
+    if user_vote:
+        vote_id = user_vote.id
+        return redirect('movie:edit_vote', pk=vote_id)
     if request.method == 'POST':
         vote_form = VoteForm(request.POST)
         if vote_form.is_valid():
@@ -125,6 +130,7 @@ def edit_vote(request, pk):
         vote_form = VoteForm(request.POST, instance=vote)
         if vote_form.is_valid():
             vote_form.save()
+            movie.calculate_average_rating()
             return redirect('movie:get_all_movies')
     else:
         vote_form = VoteForm(instance=vote)
@@ -140,6 +146,7 @@ def edit_vote(request, pk):
 def get_user_votes(request):
     current_user = request.user
     votes = Vote.objects.filter(user=current_user)
+
     paginator = Paginator(votes, 5)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)

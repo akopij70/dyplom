@@ -124,6 +124,12 @@
     transition: all 0.3s;
 }
 
+.menu-option-negative {
+    background-color: rgb(59, 59, 59);
+    color: rgb(218, 218, 218);
+    cursor: default;
+}
+
 .menu-option:hover {
     background-color: rgb(59, 59, 59);
     color: rgb(180, 180, 180);
