@@ -5,8 +5,8 @@ from django.db.models import Avg
 
 class Movie(models.Model):
     average_rating = models.DecimalField(max_digits=2, decimal_places=1, blank=True, null=True)
-    title = models.CharField(max_length=255)
-    director = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, blank=False, null=False)
+    director = models.CharField(max_length=255, blank=False, null=False)
     release_date = models.PositiveSmallIntegerField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     thumbnail = models.ImageField(upload_to='movies_thumbnails', blank=True, null=True, default='movies_thumbnails'

@@ -46,7 +46,7 @@ class Event(models.Model):
         event_year = self.date.year
         event_week = self.date.isocalendar().week
         result = current_week < event_week and current_year == event_year
-        return current_year <= event_year or result
+        return current_year < event_year or result
 
     def __str__(self) -> str:
         formatted_date = self.date.strftime('%d.%m.%y')
