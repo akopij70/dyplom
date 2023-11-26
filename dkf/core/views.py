@@ -97,6 +97,7 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
+            # form.clean_email()
             user = form.save(commit=False)
             user.is_active = False
             user.save()
@@ -171,7 +172,9 @@ def reset_password(request):
         form = PasswordResetForm(request.POST)
         if form.is_valid():
             user_email = form.cleaned_data['email']
-            associated_user = get_user_model().objects.filter(Q(email=user_email)).first()
+            name = form.cleaned_data['username']
+            # associated_user = get_user_model().objects.filter(Q(email=user_email)).first()
+            associated_user = get_user_model().objects.filter(email=user_email, username=name).first()
             if associated_user:
                 subject = 'Zmiana hasła'
                 message = render_to_string('core/reset_password_email.html', {

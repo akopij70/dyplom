@@ -27,6 +27,12 @@ class SignupForm(UserCreationForm):
                'class': 'form-input'})
                                 )
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('Ten adres email jest już używany.')
+        return email
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Nazwa użytkownika:', widget=forms.TextInput(
@@ -56,7 +62,12 @@ class SetPasswordForm(SetPasswordForm):
 
 class PasswordResetForm(PasswordResetForm):
     class Meta:
-        fields = 'email'
+        fields = ('username', 'email')
+
+    username = forms.CharField(label='Nazwa użytkownika:', widget=forms.TextInput(
+        attrs={'placeholder': 'Twoja nazwa',
+               'class': 'form-input'}
+    ))
 
     email = forms.CharField(label='Email:', max_length=250, widget=forms.EmailInput(
         attrs={'placeholder': 'Twój adres email',
