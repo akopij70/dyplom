@@ -24,12 +24,12 @@ Tutaj znajdują się filmy, które zostały przez Ciebie ocenione.
                     <div> {{ vote.movie }} </div>
                     <div> Średnia ocena widzów:
                         {% localize off %}
-                            {{ vote.movie.average_rating }} / 8.5
+                            {{ vote.movie.average_rating }} / 10
                         {% endlocalize %}
                     </div>
                     <div>
                         {% localize off %}
-                            Twoja ocena: {{ vote.rating }} / 8.5
+                            Twoja ocena: {{ vote.rating }} / 10
                         {% endlocalize %}
                     </div>
                     <div> <a href="{% url 'movie:movie_details' vote.movie.id %}">

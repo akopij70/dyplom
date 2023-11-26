@@ -27,7 +27,7 @@ class Movie(models.Model):
 
 class Vote(models.Model):
     class PossibleRatings:
-        RATES = [(i / 10, str(i / 10)) for i in range(10, 90, 5)]  # ratings 1.0 - 8.5
+        RATES = [(i / 10, str(i / 10)) for i in range(10, 105, 5)]  # ratings 1.0 - 8.5
 
     movie = models.ForeignKey(Movie, related_name='votes', on_delete=models.CASCADE)
     rating = models.DecimalField(choices=PossibleRatings.RATES, max_digits=3, decimal_places=1)
